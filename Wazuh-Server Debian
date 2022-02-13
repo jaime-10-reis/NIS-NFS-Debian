@@ -1,5 +1,6 @@
 ✵ Wazuh-Server Debian
 
+
 ℹ️ Install the necessary packages for the installation:
 ➜ apt install curl apt-transport-https unzip wget libcap2-bin software-properties-common lsb-release gnupg
 ℹ️ Install the GPG key:
