@@ -1,0 +1,25 @@
+✵ Apache2 Debian
+
+➜ apt install apache2
+➜ a2enmod ssl
+➜ a2ensite default-ssl.conf
+➜ systemctl restart apache2
+➜ nano /etc/apache2/sites-available/default-ssl.conf
+ℹ️ change:
+####
+htmls
+ℹ️ changes the names of certificates
+➜ cd /var/www/
+➜ cp -r html/ htmls
+➜ cd html/
+➜ > index.html
+➜ nano index.html 
+####
+(write what you want)
+➜ cd htmls/
+➜ > index.html
+➜ nano index.html
+####
+(write what you want)
+➜ systemctl restart apache2
+
