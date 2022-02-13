@@ -1,0 +1,36 @@
+✵ Wazuh-Agent Debian
+
+******************************
+ℹ️ Open your client browser
+####
+URL = <IP_SERVER_PUBLIC:444>          # Make sure you have an FW rule to redirect Port:444 to your Wazuh-Server instance
+user = admin
+Password = admin
+******************************
+
+****************************************************
+ℹ️ BROWSER -> WAZUH -> AGENTS -> Deploy New Agent 
+
+1️⃣ Choose the Operating system
+
+2️⃣ Choose the architecture
+
+3️⃣ Wazuh server address: <IP_SERVER_WAZUH>
+
+4️⃣ Assign the agent to a group: <default>
+
+5️⃣ Install and enroll the agent:
+
+✔️  <Copy Command>
+✔️  Open your Clients (Agents) machines    # You can use this command to install and enroll the Wazuh agent in one or more hosts.
+✔️  <Paste Command>
+
+6️⃣ Start the agent:
+
+✔️  <Copy Command>
+✔️  Open your Clients (Agents) machines again
+✔️  <Paste Command>
+   
+ℹ️ BROWSER -> WAZUH -> AGENTS
+ℹ️ Check if your agents that you attached are all "active".
+ℹ️ Now you can open a 'Summary Panel' for each one.
