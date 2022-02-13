@@ -1,0 +1,83 @@
+✵ NIS & NFS Debian
+
+♤ Server
+➜ apt install nfs-kernel-server
+➜ nano /etc/exports
+ℹ️ add to the end of the file:
+#### /var/homes *(rw,sync,no_subtree_check,no_root_squash)
+➜ mkdir /var/homes 
+➜ exportfs -a
+➜ systemctl enable --now nfs-kernel-server 
+➜ adduser user --home /var/homes/user
+➜ echo xfce4-session > /var/homes/user/.xsession
+➜ chown user:user /var/homes/user/.xsession
+➜ apt -y install nis
+ℹ️ write during installation:
+#### (DOMAIN)
+➜ nano /etc/default/nis
+ℹ️ modify on "NISSERVER="
+####
+master
+➜ nano /etc/ypserv.securenets
+ℹ️ comment:
+#### 0.0.0.0 0.0.0.0
+ℹ️ add at the end of the file:
+####
+ipmask ip (of the network)
+➜ nano /var/yp/Makefile
+ℹ️ change in the line 52 and 56:
+####
+MERGE_PASSWD=true
+MERGE_GROUP=true
+➜ /usr/lib/yp/ypinit -m
+####
+Ctrl + d
+y
+➜ nano /etc/yp.conf
+ypserver IP_PRIV_SERVER
+➜ systemctl restart nis
+
+⚠️ when we create a user, do:
+➜ cd /var/yp
+➜ make
+
+♤ Client
+➜ apt install nfs-common
+➜ mkdir /var/homes
+➜ mount -t nfs IP_PRIV_SRV:/var/homes /var/homes/
+➜ cat /etc/mtab
+#### 
+copy the line where it has the ip and paste in /etc/fstab adding "nofail"
+➜ apt -y install nis
+➜ nano /etc/yp.conf
+ℹ️ add:
+####
+ypserver (IP_SERVER)
+(hostname domain ip_server hostname.domain
+➜ nano /etc/nsswitch.conf
+ℹ️ stay as follows:
+####
+passwd:    compat nis
+group:    compat nis
+shadow:    compat nis
+gshadow:    files
+ 
+hosts:        files dns nis
+networks:    files
+
+protocols:    db files
+services:    db files
+ethers:    db files
+rpc:        db files
+
+netgroup:    nis
+➜ nano /etc/pam.d/common-session
+ℹ️ add to the end of the file:
+####
+session optional    pam_mkhomedir.so skel=/etc/skel umask=077
+➜ systemctl restart nis
+
+To check:
+➜ login user
+
+DONE
