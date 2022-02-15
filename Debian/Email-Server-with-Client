@@ -25,36 +25,72 @@ enta.pt
 ✔️ +
 ✔️ ipv4
 ➜ nano /etc/postfix/main.cf
-ℹ️ change
+ℹ️ change:
 ####
 smtpd_tls_cert_file=/etc/ssl/certs/(yourcertificate).crt
 smtpd_tls_key_file=/etc/ssl/private/(yourcertificate).key
 ➜ nano /etc/postfix/master.cf
-ℹ️ uncoment the first group
+ℹ️ uncoment the first group:
 ####
 submission inet n       -       y       -       -       smtpd
-   -o syslog_name=postfix/submission
-   -o smtpd_tls_security_level=encrypt
-   -o smtpd_sasl_auth_enable=yes
+o syslog_name=postfix/submission
+o smtpd_tls_security_level=encrypt
+o smtpd_sasl_auth_enable=yes
 ℹ️ and add bellow -o smtpd_sasl_auth_enable=yes:
-   -o smtpd_client_restrictions=permit_sasl_authenticated,reject
-➜ 
-➜
-➜
-➜
-➜
-➜
-➜
-➜
-➜
-➜
-➜
-➜
-➜
-➜
-➜
-➜
-➜
-➜
-➜
-➜
+o smtpd_client_restrictions=permit_sasl_authenticated,reject
+ℹ️ uncoment the second group:
+####
+smtps     inet  n       -       y       -       -       smtpd
+o syslog_name=postfix/smtps
+o smtpd_tls_wrappermode=yes
+o smtpd_sasl_auth_enable=yes
+o smtpd_client_restrictions=permit_sasl_authenticated,reject
+➜ nano /etc/postfix/sasl/smtpd.conf
+ℹ️ add:
+####
+pwcheck_method: saslauthd
+mech_list: PLAIN LOGIN
+➜ nano /etc/default/saslauthd
+ℹ️ edit:
+####
+START=yes
+OPTIONS="-c -m /var/spool/postfix/var/run/saslauthd"
+➜ postconf -e 'home_mailbox = Maildir/'
+➜ nano /etc/dovecot/conf.d/10-auth.conf
+ℹ️ uncomment and edit:
+####
+disable_plaintext_auth = no
+➜ nano /etc/dovecot/conf.d/10-mail.conf
+ℹ️ uncomment:
+####
+mail_location = maildir:~/Maildir
+ℹ️ comment:
+mail_location = mbox:~/mail:INBOX=/var/mail/%u
+➜ nano /etc/dovecot/conf.d/10-ssl.conf
+####
+ssl = yes
+ℹ️ uncomment and edit:
+ssl_cert = </etc/ssl/certs/(DOMAIN).crt
+ssl_key = </etc/ssl/private/(DOMAIN).key
+➜ cd /etc/skel/
+➜ maildirmake.dovecot Maildir
+➜ adduser postfix sasl
+➜ adduser dovecot sasl
+➜ systemctl restart saslauthd.service postfix dovecot
+➜ cd /etc/skel
+➜ maildirmake.dovecot Maildir
+➜ adduser user1
+➜ adduser user2
+➜ ss -tulp | grep master
+ℹ️ confirm the following ports:
+✔️ 110
+✔️ 143
+✔️ 993
+✔️ 995
+➜ ss -tulp | grep dovecot
+ℹ️ confirm the following ports:
+✔️ 110
+✔️ 143
+✔️ 993
+✔️ 995
+
