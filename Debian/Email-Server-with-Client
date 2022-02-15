@@ -94,3 +94,25 @@ ssl_key = </etc/ssl/private/(DOMAIN).key
 ✔️ 993
 ✔️ 995
 
+➡️ CERTIFICATES server
+➜ apt install easy-rsa
+➜ cp -r /usr/share/easy-rsa/ /etc/
+➜ cd /etc/easy-rsa/
+➜ nano openssl-easyrsa.conf
+ℹ️ comment:
+####
+#RANDLIFE
+➜ mv vars.example vars
+➜ nano vars
+ℹ️ change and add:
+####
+“ca_only” to “org”
+(add your information)
+➜ ./easyrsa init-pki
+➜ ./easyrsa build-ca
+➜ ./easyrsa build-server-full azores.pt nopass
+ℹ️ copy the certificates to: 
+"/etc/ssl/certs/(DOMAIN).crt"
+"/etc/ssl/private/(DOMAIN).key"
+   
+DONE
