@@ -1,0 +1,33 @@
+✵ Nginx
+
+➜ apt install nginx
+➜ apt install ssl-cert
+➜ cd /etc/nginx/snippets/
+➜ cp snakeoil.conf DOMAIN.conf
+➜ nano DOMAIN.conf
+ℹ️ change the names of certificates
+➜ cd ../sites-available/
+➜ cp default seguro
+v nano seguro
+ℹ️ edit:
+✔️ delete lines :80
+✔️ uncomment lines :443
+✔️ uncomment include snippets/snakeoil.conf;
+✔️ change the snakeoil.conf to DOMAIN.conf
+✔️ change the root to htmls
+➜ cd /var/www/
+➜ cp -r html/ htmls
+➜ cd html/
+➜ > index.nginx-debian.html
+➜ nano index.nginx-debian.html 
+ℹ️ edit as you like: ####(you are changing the :80)
+➜ cd htmls/
+➜ > index.nginx-debian.html
+➜ nano index.nginx-debian.html 
+ℹ️ edit as you like: ####(you are changing the :443)
+➜ cd /etc/nginx/sites-enabled/
+➜ ln -s /etc/nginx/sites-available/seguro seguro
+➜ systemctl restart nginx
+➜ systemctl status nginx
+
+DONE
