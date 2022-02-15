@@ -1,0 +1,60 @@
+✵ Email-Server-with-Client
+
+
+♤ Client
+➜ adduser user1
+➜ adduser user2
+➜ cp /home/ubuntu/.xsession /home/user1/.xsession
+➜ chown user1:user1 /home/user1/.xsession
+➜ cp /home/ubuntu/.xsession /home/user2/.xsession
+➜ chown user2:user2 /home/user2/.xsession
+
+♤ Server
+➜ apt -y install postfix postfix-doc dovecot-imapd dovecot-pop3d sasl2-bin
+####
+enta.pt
+➜ dpkg-reconfigure postfix
+ℹ️ follow:
+####
+✔️ DOMAIN
+✔️ ubuntu
+✔️ skip
+✔️ no
+✔️ clear line
+✔️ 0
+✔️ +
+✔️ ipv4
+➜ nano /etc/postfix/main.cf
+ℹ️ change
+####
+smtpd_tls_cert_file=/etc/ssl/certs/(yourcertificate).crt
+smtpd_tls_key_file=/etc/ssl/private/(yourcertificate).key
+➜ nano /etc/postfix/master.cf
+ℹ️ uncoment the first group
+####
+submission inet n       -       y       -       -       smtpd
+   -o syslog_name=postfix/submission
+   -o smtpd_tls_security_level=encrypt
+   -o smtpd_sasl_auth_enable=yes
+ℹ️ and add bellow -o smtpd_sasl_auth_enable=yes:
+   -o smtpd_client_restrictions=permit_sasl_authenticated,reject
+➜ 
+➜
+➜
+➜
+➜
+➜
+➜
+➜
+➜
+➜
+➜
+➜
+➜
+➜
+➜
+➜
+➜
+➜
+➜
+➜
