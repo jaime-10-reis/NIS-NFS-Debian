@@ -1,0 +1,46 @@
+✵ Teleport
+
+♤ Server
+ℹ️ install teleport here
+and then:
+➜ sudo curl https://deb.releases.teleport.dev/teleport-pubkey.asc \
+➜ -o /usr/share/keyrings/teleport-archive-keyring.asc
+➜ cat<<EOF>/etc/apt/sources.list.d/teleport.list
+➜ deb [signed-by=/usr/share/keyrings/teleport-archive-keyring.asc] https://deb.releases.teleport.dev/ stable main
+➜ EOF 
+➜ sudo apt-get update
+➜ sudo apt-get install teleport
+➜ dig tele.domain	@IP_SERVER_DNS #to confirm
+➜ systemctl start teleport
+ℹ️ your must have a 'ca.crt', 'tele.DOMAIN.crt' and 'tele.DOMAIN.key'
+➜ cat /etc/easy-rsa/pki/private/tele.inova.pt.key >> /var/lib/teleport/privkey.pem
+➜ cat /etc/easy-rsa/pki/issued/tele.inova.pt.crt >> /var/lib/teleport/fullchain.pem
+➜ teleport configure -o file     --cluster-name=tele.inova.pt     --public-addr=tele.inova.pt:443     --cert-file=/var/lib/teleport/fullchain.pem     --key-		file=/var/lib/teleport/privkey.pem
+➜ apt install ssl-cert
+➜ cd /usr/local/share/ca-certificates/
+➜ cat /etc/easy-rsa/pki/ca.crt >> ca.crt
+➜ update-ca-certificates 
+➜ tctl users add teleport-admin --roles=editor,access --logins=root,ubuntu,ec2-user
+ℹ️ will give you a link of an invite to join teleport menu
+ℹ️ swap '<proxyhost>' to your teleport hostname, 'tele.DOMAIN:443'
+♤ Browser
+➜ Paste it and search
+➜ Create your admin credentials
+➜ Open your two-factor authenticator and insert 'Token'
+ℹ️ create account 
+
+♤ Agente
+ℹ️ Now we will add an SSH Client (Agent) into our Teleport Server so we can access him via browser.
+✔️ "add server"
+✔️  copy (Step 3 - Generate a join token) command
+ ℹ️ go to Server
+✔️ paste it
+✔️ copy it 
+ ℹ️ go to client
+⚠️ you have toleport installed here
+% HOW DO YOU INSTALL? (line 14 ... 26)
+✔️ paste it
+ ℹ️ return to your browser
+ ℹ️ check if it added a new ssh session
+ 
+ DONE
