@@ -1,0 +1,14 @@
+✵ Thunderbird-Graphic Interface Debian
+
+♤ Client
+ℹ️ exit from root
+➜ sudo apt install -y xfce4 xfce4-goodies
+ℹ️ choose:
+####
+lightdm
+➜ sudo apt install -y xrdp chromium-browser filezilla thunderbird
+➜ sudo adduser xrdp ssl-cert
+➜ echo xfce4-session > ~/.xsession
+➜ sudo reboot
+
+DONE
