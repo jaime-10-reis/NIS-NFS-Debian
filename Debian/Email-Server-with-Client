@@ -12,7 +12,7 @@
 ♤ Server
 ➜ apt -y install postfix postfix-doc dovecot-imapd dovecot-pop3d sasl2-bin
 ####
-enta.pt
+yourDOMAIN
 ➜ dpkg-reconfigure postfix
 ℹ️ follow:
 ####
