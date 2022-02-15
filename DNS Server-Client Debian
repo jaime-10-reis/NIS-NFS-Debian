@@ -1,0 +1,45 @@
+✵ DNS Server-Client Debian
+
+♤ Server
+➜ sudo su -
+➜ apt install bind9
+➜ cd /etc/bind/
+➜ nano named.conf.options
+ℹ️ Uncomment:
+####
+forwarders {
+8.8.8.8;
+};
+➜ cp db.local db.DOMAIN
+➜ cp db.127 db.IP-R
+➜ mv db.DOMAIN /var/lib/bind/
+➜ mv db.IP-R /var/lib/bind/
+➜ cd /var/lib/bind/
+➜ nano db.DOMAIN
+ℹ️ do CTRL + \ (searches for and replaces: localhost >> DOMAIN)
+ℹ️ configure your forward zone
+➜ nano db.IP-R
+ℹ️ do CTRL + \ (searches for and replaces: localhost >> DOMAIN)
+ℹ️ configure your reverse zone
+➜ cd /etc/bind/
+➜ nano named.conf.default-zones
+ℹ️ copy your examples of forward and reverse zones
+➜ nano named.conf.local
+ℹ️ pastes what you copied from the other file
+ℹ️ configure your forward and reverse zones
+➜ systemctl restart bind9
+➜ nslookup (site dnsip)
+➜ dig (site @dnsip)
+
+
+♤ Client
+➜ sudo su -
+➜ nano /etc/netplan/50-cloud-init.yaml
+ℹ️ change:
+####
+addresses: [ 8.8.8.8 ]
+ℹ️ to:
+####
+addresses: [ serverip ]
+
+DONE
