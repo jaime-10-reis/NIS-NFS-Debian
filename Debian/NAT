@@ -8,6 +8,7 @@
 ➜ netfilter-persistent save
 ➜ nano /etc/sysctl.conf  
 #### net.ipv4.ip_forward = 1
+➜ sysctl -p
 
 ♤ Client
 ➜ nano /etc/netplan/50-cloud-init.yaml
